@@ -18,35 +18,52 @@ func (p HistorianHysteria) Details() Details {
 }
 
 func (p HistorianHysteria) Solve(input *Input) (Result, error) {
-	l1, l2, err := p.parseInput(input)
+	left, right, err := p.parseInput(input)
 
 	if err != nil {
 		return Result{}, err
 	}
 
-	part1 := p.calculateDistance(l1, l2)
+	part1 := p.calcDistance(left, right)
+	part2 := p.calcSimilarityScore(left, right)
 
 	return Result{
 		Part1: strconv.Itoa(part1),
-		Part2: "TODO",
+		Part2: strconv.Itoa(part2),
 	}, nil
 }
 
-func (p HistorianHysteria) calculateDistance(l1, l2 []int) int {
-	sort.Ints(l1)
-	sort.Ints(l2)
+func (p HistorianHysteria) calcDistance(left, right []int) int {
+	sort.Ints(left)
+	sort.Ints(right)
 	distance := 0
 
-	for i := 0; i < len(l1); i++ {
-		distance += int(math.Abs(float64(l1[i] - l2[i])))
+	for i := 0; i < len(left); i++ {
+		distance += int(math.Abs(float64(left[i] - right[i])))
 	}
 
 	return distance
 }
 
+func (p HistorianHysteria) calcSimilarityScore(left, right []int) int {
+	freq := make(map[int]int)
+
+	for _, r := range right {
+		freq[r] += 1
+	}
+
+	score := 0
+
+	for _, l := range left {
+		score += l * freq[l]
+	}
+
+	return score
+}
+
 func (p HistorianHysteria) parseInput(input *Input) ([]int, []int, error) {
-	var list1 []int
-	var list2 []int
+	var left []int
+	var right []int
 
 	for i, line := range input.Lines() {
 		if !lineRgx.MatchString(line) {
@@ -54,11 +71,11 @@ func (p HistorianHysteria) parseInput(input *Input) ([]int, []int, error) {
 		}
 
 		groups := lineRgx.FindAllStringSubmatch(line, -1)
-		col1, _ := strconv.Atoi(groups[0][1])
-		col2, _ := strconv.Atoi(groups[0][2])
-		list1 = append(list1, col1)
-		list2 = append(list2, col2)
+		l, _ := strconv.Atoi(groups[0][1])
+		r, _ := strconv.Atoi(groups[0][2])
+		left = append(left, l)
+		right = append(right, r)
 	}
 
-	return list1, list2, nil
+	return left, right, nil
 }

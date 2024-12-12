@@ -14,8 +14,8 @@ func TestSolutions(t *testing.T) {
 		{
 			puzzle: HistorianHysteria{},
 			want: Result{
-				Part1: "TODO",
-				Part2: "TODO",
+				Part1: "1873376",
+				Part2: "18997088",
 			},
 		},
 	}
