@@ -34,9 +34,9 @@ func (p HistorianHysteria) Solve(input *Input) (Result, error) {
 }
 
 func (p HistorianHysteria) calcDistance(left, right []int) int {
+	var distance int
 	sort.Ints(left)
 	sort.Ints(right)
-	distance := 0
 
 	for i := 0; i < len(left); i++ {
 		distance += int(math.Abs(float64(left[i] - right[i])))
@@ -46,13 +46,12 @@ func (p HistorianHysteria) calcDistance(left, right []int) int {
 }
 
 func (p HistorianHysteria) calcSimilarityScore(left, right []int) int {
+	var score int
 	freq := make(map[int]int)
 
 	for _, r := range right {
 		freq[r] += 1
 	}
-
-	score := 0
 
 	for _, l := range left {
 		score += l * freq[l]
@@ -62,8 +61,7 @@ func (p HistorianHysteria) calcSimilarityScore(left, right []int) int {
 }
 
 func (p HistorianHysteria) parseInput(input *Input) ([]int, []int, error) {
-	var left []int
-	var right []int
+	var left, right []int
 
 	for i, line := range input.Lines() {
 		if !lineRgx.MatchString(line) {
