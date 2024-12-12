@@ -22,7 +22,7 @@ func TestSolutions(t *testing.T) {
 			puzzle: RedNosedReports(),
 			want: Result{
 				Part1: "257",
-				Part2: "TODO",
+				Part2: "328",
 			},
 		},
 	}

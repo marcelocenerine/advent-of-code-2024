@@ -28,10 +28,11 @@ func (p redNosedReports) Solve(input *Input) (Result, error) {
 	}
 
 	part1 := p.countSafe(reports)
+	part2 := p.countSafeWithTolerance(reports)
 
 	return Result{
 		Part1: strconv.Itoa(part1),
-		Part2: "TODO",
+		Part2: strconv.Itoa(part2),
 	}, nil
 }
 
@@ -41,6 +42,25 @@ func (p redNosedReports) countSafe(reports []report) int {
 	for _, rp := range reports {
 		if p.isSafe(rp) {
 			count += 1
+		}
+	}
+
+	return count
+}
+
+func (p redNosedReports) countSafeWithTolerance(reports []report) int {
+	var count int
+
+	for _, rp := range reports {
+		for i := 0; i < len(rp); i++ {
+			var tmp report
+			tmp = append(tmp, rp[:i]...)
+			tmp = append(tmp, rp[i+1:]...)
+
+			if p.isSafe(tmp) {
+				count += 1
+				break
+			}
 		}
 	}
 
