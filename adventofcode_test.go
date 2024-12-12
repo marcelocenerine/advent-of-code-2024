@@ -18,6 +18,13 @@ func TestSolutions(t *testing.T) {
 				Part2: "18997088",
 			},
 		},
+		{
+			puzzle: RedNosedReports{},
+			want: Result{
+				Part1: "257",
+				Part2: "TODO",
+			},
+		},
 	}
 
 	for _, tc := range tests {
