@@ -9,15 +9,18 @@ import (
 	"strconv"
 )
 
-var lineRgx = regexp.MustCompile(`^([0-9]+)   ([0-9]+)$`)
+func HistorianHysteria() Puzzle {
+	return historianHysteria{}
+}
 
-type HistorianHysteria struct{}
+type historianHysteria struct {
+}
 
-func (p HistorianHysteria) Details() Details {
+func (p historianHysteria) Details() Details {
 	return Details{Day: 1, Description: "Historian Hysteria"}
 }
 
-func (p HistorianHysteria) Solve(input *Input) (Result, error) {
+func (p historianHysteria) Solve(input *Input) (Result, error) {
 	left, right, err := p.parseInput(input)
 
 	if err != nil {
@@ -33,7 +36,7 @@ func (p HistorianHysteria) Solve(input *Input) (Result, error) {
 	}, nil
 }
 
-func (p HistorianHysteria) calcDistance(left, right []int) int {
+func (p historianHysteria) calcDistance(left, right []int) int {
 	var distance int
 	sort.Ints(left)
 	sort.Ints(right)
@@ -45,7 +48,7 @@ func (p HistorianHysteria) calcDistance(left, right []int) int {
 	return distance
 }
 
-func (p HistorianHysteria) calcSimilarityScore(left, right []int) int {
+func (p historianHysteria) calcSimilarityScore(left, right []int) int {
 	var score int
 	freq := make(map[int]int)
 
@@ -60,7 +63,8 @@ func (p HistorianHysteria) calcSimilarityScore(left, right []int) int {
 	return score
 }
 
-func (p HistorianHysteria) parseInput(input *Input) ([]int, []int, error) {
+func (p historianHysteria) parseInput(input *Input) ([]int, []int, error) {
+	lineRgx := regexp.MustCompile(`^([0-9]+)   ([0-9]+)$`)
 	var left, right []int
 
 	for i, line := range input.Lines() {

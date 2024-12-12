@@ -12,14 +12,14 @@ func TestSolutions(t *testing.T) {
 		want   Result
 	}{
 		{
-			puzzle: HistorianHysteria{},
+			puzzle: HistorianHysteria(),
 			want: Result{
 				Part1: "1873376",
 				Part2: "18997088",
 			},
 		},
 		{
-			puzzle: RedNosedReports{},
+			puzzle: RedNosedReports(),
 			want: Result{
 				Part1: "257",
 				Part2: "TODO",

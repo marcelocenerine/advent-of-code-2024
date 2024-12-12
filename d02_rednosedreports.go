@@ -8,17 +8,19 @@ import (
 	"strings"
 )
 
-type Report struct {
-	levels []int
+func RedNosedReports() Puzzle {
+	return redNosedReports{}
 }
 
-type RedNosedReports struct{}
+type redNosedReports struct{}
 
-func (p RedNosedReports) Details() Details {
+func (p redNosedReports) Details() Details {
 	return Details{Day: 2, Description: "Red-Nosed Reports"}
 }
 
-func (p RedNosedReports) Solve(input *Input) (Result, error) {
+type report []int
+
+func (p redNosedReports) Solve(input *Input) (Result, error) {
 	reports, err := p.parseInput(input)
 
 	if err != nil {
@@ -33,39 +35,44 @@ func (p RedNosedReports) Solve(input *Input) (Result, error) {
 	}, nil
 }
 
-func (p RedNosedReports) countSafe(reports []Report) int {
+func (p redNosedReports) countSafe(reports []report) int {
 	var count int
 
-outer:
-	for _, rep := range reports {
-		if len(rep.levels) > 1 {
-			increasing := rep.levels[0] < rep.levels[1]
-
-			for i := 1; i < len(rep.levels); i++ {
-				curr := rep.levels[i]
-				prev := rep.levels[i-1]
-				diff := math.Abs(float64(prev - curr))
-
-				if diff < 1 || diff > 3 ||
-					(prev < curr && !increasing) ||
-					(prev > curr && increasing) {
-					continue outer
-				}
-			}
+	for _, rp := range reports {
+		if p.isSafe(rp) {
+			count += 1
 		}
-
-		count += 1
 	}
 
 	return count
 }
 
-func (p RedNosedReports) parseInput(input *Input) ([]Report, error) {
-	var reports []Report
+func (p redNosedReports) isSafe(rep report) bool {
+	if len(rep) <= 1 {
+		return true
+	}
+
+	increasing := rep[0] < rep[1]
+
+	for i := 1; i < len(rep); i++ {
+		curr := rep[i]
+		prev := rep[i-1]
+		diff := math.Abs(float64(prev - curr))
+
+		if diff < 1 || diff > 3 || (prev < curr && !increasing) || (prev > curr && increasing) {
+			return false
+		}
+	}
+
+	return true
+}
+
+func (p redNosedReports) parseInput(input *Input) ([]report, error) {
+	var reports []report
 
 	for i, line := range input.Lines() {
 		parts := strings.Split(line, " ")
-		var levels []int
+		var report []int
 
 		for _, part := range parts {
 			level, err := strconv.Atoi(part)
@@ -74,10 +81,10 @@ func (p RedNosedReports) parseInput(input *Input) ([]Report, error) {
 				return nil, fmt.Errorf("line %d is invalid: %s. %w", i, line, err)
 			}
 
-			levels = append(levels, level)
+			report = append(report, level)
 		}
 
-		reports = append(reports, Report{levels})
+		reports = append(reports, report)
 	}
 
 	return reports, nil
