@@ -29,7 +29,7 @@ func TestSolutions(t *testing.T) {
 			puzzle: MullItOver(),
 			want: Result{
 				Part1: "185797128",
-				Part2: "TODO",
+				Part2: "89798695",
 			},
 		},
 	}
