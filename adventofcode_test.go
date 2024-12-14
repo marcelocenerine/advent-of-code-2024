@@ -25,6 +25,13 @@ func TestSolutions(t *testing.T) {
 				Part2: "328",
 			},
 		},
+		{
+			puzzle: MullItOver(),
+			want: Result{
+				Part1: "185797128",
+				Part2: "TODO",
+			},
+		},
 	}
 
 	for _, tc := range tests {
