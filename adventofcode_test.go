@@ -32,6 +32,13 @@ func TestSolutions(t *testing.T) {
 				Part2: "89798695",
 			},
 		},
+		{
+			puzzle: CeresSearch(),
+			want: Result{
+				Part1: "2534",
+				Part2: "?",
+			},
+		},
 	}
 
 	for _, tc := range tests {
