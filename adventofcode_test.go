@@ -36,7 +36,7 @@ func TestSolutions(t *testing.T) {
 			puzzle: CeresSearch(),
 			want: Result{
 				Part1: "2534",
-				Part2: "?",
+				Part2: "1866",
 			},
 		},
 	}
